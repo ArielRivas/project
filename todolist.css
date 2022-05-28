@@ -56,7 +56,7 @@ button {
     cursor: pointer;
 }
 button:hover {
-  color:darkcyan;
+  color:rgb(145, 206, 158);
 }
 input::placeholder {
   font-family: "Kanit", sans-serif;
