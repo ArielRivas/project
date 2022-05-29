@@ -1,70 +1,107 @@
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-style: 0;
   font-family: "Fjalla One", sans-serif;
   max-width: 100vw;
+  min-height: 100vh;
+  color: aliceblue;
   background-image: url(../assets/pexels-oleksandr-tiupa-192136.jpg);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
-h1 {
-  text-align: center;
-  font-size: 100px;
-  line-height: 1;
-  margin-bottom: 0;
-  color: rgb(255, 255, 255);
+h1 , .scoreBoard {
+  margin-left: 15%;
 }
-.score {
-  padding: 3%;
-  color: #fff;
-  font-size: 2rem;
-}
-.game {
-  width: 600px;
-  height: 400px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: auto;
+.holes {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  transform: translate(-50%, -50%);
 }
 .hole {
-  flex: 33%;
-  overflow: hidden;
   position: relative;
+  height: 150px;
+  width: 200px;
+  overflow: hidden;
+  pointer-events: none;
 }
-.hole:after {
-  content: "";
-  display: block;
-  background: url(../assets/dirt.png) bottom center no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 90px;
+.dirt {
   position: absolute;
-  bottom: -30px;
+  bottom: -20px;
+  left: -20px;
+  width: 210px;
+  object-fit: cover;
+  pointer-events: none;
 }
-.mole {
-  background-image: url("../assets/Diglett_EpEc.gif");
-  background-size: cover;
-  background-repeat: no-repeat;
+.digglet {
   position: absolute;
-  top: 100%;
-  width: 100%;
-  height: 100%;
-  transition: all 0.4s;
-  transform: translateY(49px);
+  top: 160px;
+  width: 140px;
+  left: 10px;
+  object-fit: contain;
+  cursor: pointer;
+  z-index: -1;
 }
-.hole.up .mole {
-  top: 0;
+.game {
+  position: absolute;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  pointer-events: all;
+  z-index: 1000;
+  background-color: green;
 }
-.button {
-  width: 175px;
-  font-size: 35px;
-  height: 70px;
-  color: #fff;
-  background-color: rgb(52, 212, 52);
-  margin-top: 1%;
-  border-width: 0;
-  border-radius: 20px;
+.gameOver {
+  visibility: hidden;
+}
+.close {
+  opacity: 0;
+  pointer-events: none;
+}
+button {
+  padding: 1rem;
+  background: none;
+  color:aliceblue;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+button:hover {
+  background-color: blue;
+}
+.highScore {
+  margin-left: 10px;
+  animation: scorebump 0.5 ease infinite alternate;
+}
+@keyframes scorebump {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+@keyframes faceup
+{
+  from{
+    transform: translateY(140px);
+  }
+  to {
+    transform: translateY(-130px);
+  }
+}
+@keyframes facedown
+{
+  from{
+    transform: translateY(-130px);
+  }
+  to {
+    transform: translateY(140px);
+  }
 }

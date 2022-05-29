@@ -4,39 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mole buster</title>
     <link rel="stylesheet" href="./molebuster.css">
     <script src="./molebuster.js" defer></script>
 </head>
 <body>
-  <h1>Whack-a-mole!</h1><span class="score">0</span>
-  <button class="button" onClick="startGame()">Start!</button>
-
-  <div class="game">
-      <div class="hole hole1">
-          <div class="mole"></div>
-      </div>
-
-      <div class="hole hole2">
-          <div class="mole"></div>
-      </div>
-
-      <div class="hole hole3">
-          <div class="mole"></div>
-      </div>
-
-      <div class="hole hole4">
-          <div class="mole"></div>
-      </div>
-
-      <div class="hole hole5">
-          <div class="mole"></div>
-      </div>
-
-      <div class="hole hole6">
-          <div class="mole"></div>
-      </div>
-
+  <h1>Mole Buster!</h1>
+  <div class="scoreBoard">
+      <div>Time Left: <p class="time">60</p></div>
+      <div>Score<p class="score">0</p></div>
+  </div>
+   <div class="holes"></div>
+   <div class="game">
+    <div class="display">
+    <button class="button">Start the game</button>
+    <h2 class="gameOver">Game over!</h2>
+    <h2>High score: <span class="highScore">0</span></h2>
+    </div>
   </div>
 </body>
 </html>
