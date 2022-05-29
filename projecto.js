@@ -1,5 +1,7 @@
 let allResults = [];
 const containerPokemon = document.querySelector(".container-pokemon");
+const buttonsType = document.querySelector(".types__selector");
+
 const colorsMap = {
   fire: "#f27059",
   grass: "#74c69d",
@@ -15,8 +17,26 @@ const colorsMap = {
   flying: "#bde0fe",
   fighting: "#E9967A",
   normal: "#F5F5F5",
+  ice: "##70d6ff",
+  ghost: "9381ff",
 };
 const mainTypeColors = Object.keys(colorsMap);
+
+const getPokes = async () => {
+  for (let id = 1; id <= 151; id++) {
+    await getPokesFromApi(id);
+  }
+  console.log(allResults);
+  createPokemonCard(allResults);
+};
+
+const getPokesFromApi = async (id) => {
+  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  const value = await fetch(url);
+  const pokemon = await value.json();
+
+  allResults.push(pokemon);
+};
 
 const createPokemonCard = (pokemonPaint) => {
   const pokidex = document.querySelector(".container-pokemon");
@@ -29,7 +49,6 @@ const createPokemonCard = (pokemonPaint) => {
 
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("card-container");
-
     flipCard.appendChild(cardContainer);
 
     const card = document.createElement("div");
@@ -54,11 +73,9 @@ const createPokemonCard = (pokemonPaint) => {
     card.appendChild(name);
 
     const allTypes = document.createElement("p");
-    name.classList.add("types");
+    allTypes.classList.add("types");
     allTypes.textContent = pokemon.types.map((type) => type.type.name).join(", ");
-    const type = mainTypeColors.find(
-      (type) => allTypes.textContent.indexOf(type) > -1
-    );
+    const type = mainTypeColors.find((type) => allTypes.textContent.indexOf(type) > -1);
     const color = colorsMap[type];
     card.appendChild(allTypes);
 
@@ -88,32 +105,50 @@ const createPokemonCard = (pokemonPaint) => {
 
     cardBack.style.backgroundColor = color;
   });
+};
 
-  document.querySelector("#search-input").addEventListener("input", (event) => {
-    const userInput = event.target.value.toLowerCase().trim();
-
-    const filtered = allResults.filter((pokemon) => {
-      return pokemon.name.toLowerCase().includes(userInput.toLowerCase());
-    });
-    createPokemonCard(filtered);
-    console.log("filtered", filtered);
+const filterPokemon = (event) => {
+  const userInput = event.target.value.toLowerCase().trim();
+  const filtered = allResults.filter((pokemon) => {
+    const matchId = pokemon.id === Number(userInput);
+    const matchName = pokemon.name.toLowerCase().includes(userInput);
+    return matchId || matchName;
+    
   });
+createPokemonCard(filtered);
 };
 
-const getPokes = async () => {
-  for (let id = 1; id <= 151; id++) {
-    await getPokesFromApi(id);
+document.querySelectorAll(".types__selector").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    filterPokemonsByType(event.target.classList[1]);
+  });
+});
+
+document.getElementById("search-input").addEventListener("input", (event) => {
+  filterPokemon(event);
+});
+
+const filterPokemonsByType = (type) => {
+  if (type === "all") {
+    return createPokemonCard(allResults);
   }
-  console.log(allResults);
-  createPokemonCard(allResults);
-};
 
-const getPokesFromApi = async (id) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  const value = await fetch(url);
-  const pokemon = await value.json();
+  const filteredByType = allResults.filter((pokemon) => {
+    let matchFirstType = false;
+    let matchSecondType = false;
 
-  allResults.push(pokemon);
+    if (pokemon.types[1]) {
+      matchSecondType = pokemon.types[1].type.name === type;
+    }
+
+    if (pokemon.types[0]) {
+      matchFirstType = pokemon.types[0].type.name === type;
+    }
+
+    return matchFirstType || matchSecondType;
+  });
+  createPokemonCard(filteredByType);
 };
 
 getPokes();
+

@@ -1,25 +1,33 @@
 body {
-  border-style: 0;
-  font-family: "Fjalla One", sans-serif;
   max-width: 100vw;
   min-height: 100vh;
   color: aliceblue;
   background-image: url(../assets/pexels-oleksandr-tiupa-192136.jpg);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-h1 , .scoreBoard {
-  margin-left: 15%;
+h1 {
+  font-family: "Fjalla One", sans-serif;
+}
+h1, .scoreBoard {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+}
+.scoreBoard {
+  font-family: 'Orbitron', sans-serif;
 }
 .holes {
   position: absolute;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  top: 50%;
+  top: 60%;
   left: 50%;
-  width: 800px;
-  height: 800px;
+  width: 700px;
+  height: 700px;
   transform: translate(-50%, -50%);
 }
 .hole {
@@ -48,18 +56,20 @@ h1 , .scoreBoard {
 }
 .game {
   position: absolute;
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   pointer-events: all;
   z-index: 1000;
   background-color: green;
+  background-size: cover;
+  font-family: 'Orbitron', sans-serif;
 }
 .gameOver {
-  visibility: hidden;
+  visibility:hidden;
 }
 .close {
   opacity: 0;
@@ -71,22 +81,28 @@ button {
   color:aliceblue;
   cursor: pointer;
   transition: 0.5s ease;
+  border: 0;
+  margin-top: 2%;
+  font-family: 'Orbitron', sans-serif;
 }
 button:hover {
-  background-color: blue;
+  background-color: rgb(0, 53, 13);
 }
 .highScore {
+  position: relative;
   margin-left: 10px;
-  animation: scorebump 0.5 ease infinite alternate;
+  animation: animation 2s ease-out;
 }
-@keyframes scorebump {
-  from {
-    transform: translateY(10px);
-  }
-  to {
-    transform: translateY(-10px);
-  }
-}
+@keyframes animation {
+      0% {
+        opacity: 0;
+        left: -700px;
+      }
+      100% {
+        opacity: 1;
+        left: 0;
+      }
+    }
 @keyframes faceup
 {
   from{
